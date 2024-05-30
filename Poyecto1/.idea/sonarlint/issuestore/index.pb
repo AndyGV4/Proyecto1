@@ -9,9 +9,5 @@ X
 settings.gradle,0\5\05efc8b1657769a27696d478ded1e95f38737233
 7
 gradlew,5\b\5bbfa66edb4db3c7c33c5181f43510990d3307f9
-p
-@src/main/java/com/proyect1/banco/proyecto1/entities/Cliente.java,7\0\70acfedbb8d13111711b0705efb558d8e7542fa6
-o
-?src/main/java/com/proyect1/banco/proyecto1/entities/Cuenta.java,0\3\0390f9234a117a8add3be80305d63ee84d3d6100
 r
 Bsrc/main/java/com/proyect1/banco/proyecto1/entities/Domicilio.java,3\d\3d18273e20c1c56e4e1a9732b0eb4a4c26fde895
