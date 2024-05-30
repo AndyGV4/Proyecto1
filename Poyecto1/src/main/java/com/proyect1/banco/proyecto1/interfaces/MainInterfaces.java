@@ -31,7 +31,7 @@ public class MainInterfaces {
         System.out.println("Números aleatorios: " + numerosAleatorios);
 
         // UnaryOperator: Convertir una lista de cadenas a mayúsculas
-        List<String> cadenas = Arrays.asList("hola", "mundo", "java", "programación");
+        List<String> cadenas = Arrays.asList("hola", "mundo", "java", "programacion");
         UnaryOperator<String> aMayusculas = String::toUpperCase;
         List<String> cadenasMayusculas = cadenas.stream().map(aMayusculas).collect(Collectors.toList());
         System.out.println("Cadenas en mayúsculas: " + cadenasMayusculas);
