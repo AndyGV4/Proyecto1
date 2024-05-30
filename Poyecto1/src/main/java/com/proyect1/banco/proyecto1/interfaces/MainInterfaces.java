@@ -8,7 +8,7 @@ public class MainInterfaces {
     public static void main(String[] args) {
         // Predicate: Verificar si un número es par
         Predicate<Integer> esPar = num -> num % 2 == 0;
-        System.out.println("¿8 es par? " + esPar.test(8));
+        System.out.println("¿4 es par? " + esPar.test(8));
         System.out.println("¿9 es par? " + esPar.test(9));
 
         // Consumer: Imprimir los nombres de una lista
