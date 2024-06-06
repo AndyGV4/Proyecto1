@@ -11,3 +11,5 @@ X
 gradlew,5\b\5bbfa66edb4db3c7c33c5181f43510990d3307f9
 r
 Bsrc/main/java/com/proyect1/banco/proyecto1/entities/Domicilio.java,3\d\3d18273e20c1c56e4e1a9732b0eb4a4c26fde895
+n
+>src/main/java/com/proyect1/banco/proyecto1/entities/Banco.java,7\4\740a2283ef5b04246a8e09bfab21a02ec2440398
