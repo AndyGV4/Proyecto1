@@ -6,10 +6,12 @@ import java.time.LocalDate;
 
 public class CuentaCheque extends Cuenta {
     private double costoManejoMensual;
+    private int numeroCliente;
 
-    public CuentaCheque(int numero, LocalDate fechaApertura, double saldo, double costoManejoMensual) {
+    public CuentaCheque(int numero, LocalDate fechaApertura, double saldo, double costoManejoMensual, int numeroCliente) {
         super(numero, fechaApertura, saldo);
         this.costoManejoMensual = costoManejoMensual;
+        this.numeroCliente = numeroCliente;
     }
 
     // Getters y setters
@@ -21,13 +23,18 @@ public class CuentaCheque extends Cuenta {
         this.costoManejoMensual = costoManejoMensual;
     }
 
+    public int getNumeroCliente() {
+        return numeroCliente;
+    }
+
     @Override
     public String toString() {
-        return "CuentaDeCheque{" +
-                "numero=" + getNumero() +
-                ", fechaApertura=" + fechaApertura +
-                ", saldo=" + getSaldo() +
+        return "CuentaCheque{" +
+                "numeroCliente=" + numeroCliente +
                 ", costoManejoMensual=" + costoManejoMensual +
+                ", numero=" + getNumero() +
+                ", fechaApertura=" + getFechaApertura() +
+                ", saldo=" + getSaldo() +
                 '}';
     }
 }

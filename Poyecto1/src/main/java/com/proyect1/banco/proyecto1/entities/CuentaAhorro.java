@@ -7,10 +7,12 @@ import java.time.LocalDate;
 
 public class CuentaAhorro extends Cuenta {
     private double tasaInteresMensual;
+    private int numeroCliente;
 
-    public CuentaAhorro(int numero, LocalDate fechaApertura, double saldo, double tasaInteresMensual) {
+    public CuentaAhorro(int numero, LocalDate fechaApertura, double saldo, double tasaInteresMensual, int numeroCliente) {
         super(numero,fechaApertura, saldo);
         this.tasaInteresMensual = tasaInteresMensual;
+        this.numeroCliente = numeroCliente;
     }
 
     // Getters y setters
@@ -22,13 +24,18 @@ public class CuentaAhorro extends Cuenta {
         this.tasaInteresMensual = tasaInteresMensual;
     }
 
+    public int getNumeroCliente() {
+        return numeroCliente;
+    }
+
     @Override
     public String toString() {
         return "CuentaAhorro{" +
-                "numero=" + getNumero() +
-                ", fechaApertura=" + fechaApertura +
-                ", saldo=" + getSaldo() +
+                "numeroCliente=" + numeroCliente +
                 ", tasaInteresMensual=" + tasaInteresMensual +
+                ", numero=" + getNumero() +
+                ", fechaApertura=" + getFechaApertura() +
+                ", saldo=" + getSaldo() +
                 '}';
     }
 }
