@@ -3,8 +3,10 @@ package com.proyect1.banco.proyecto1.services.servicesImp;
 
 import com.proyect1.banco.proyecto1.entities.Cuenta;
 import com.proyect1.banco.proyecto1.services.ServicioCuentas;
-
 import java.util.ArrayList;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 
 public class ServicioCuentasImpl implements ServicioCuentas {
     private ArrayList<Cuenta> cuentas = new ArrayList<>();
@@ -21,28 +23,34 @@ public class ServicioCuentasImpl implements ServicioCuentas {
 
     @Override
     public void abonarCuenta(int numero, double abono) {
-        for (Cuenta cuenta : cuentas) {
-            if (cuenta.getNumero() == numero) {
-                cuenta.setSaldo(cuenta.getSaldo() + abono);
-                break;
-            }
-        }
+        cuentas.parallelStream()
+                .filter(cuenta -> cuenta.getNumero() == numero)
+                .findFirst()
+                .ifPresent(cuenta -> cuenta.setSaldo(cuenta.getSaldo() + abono));
     }
 
     @Override
     public void retirar(int numero, double retiro) {
-        for (Cuenta cuenta : cuentas) {
-            if (cuenta.getNumero() == numero) {
-                cuenta.setSaldo(cuenta.getSaldo() - retiro);
-                break;
-            }
-        }
+        cuentas.parallelStream()
+                .filter(cuenta -> cuenta.getNumero() == numero)
+                .findFirst()
+                .ifPresent(cuenta -> cuenta.setSaldo(cuenta.getSaldo() - retiro));
     }
 
     @Override
     public ArrayList<Cuenta> obtenerCuentas() {
-        return cuentas;
+        return cuentas.parallelStream()
+                .collect(Collectors.toCollection(ArrayList::new));
     }
+
+    @Override
+    public Cuenta obtenerCuenta(int numero) {
+        Optional<Cuenta> cuentaOpt = cuentas.parallelStream()
+                .filter(cuenta -> cuenta.getNumero() == numero)
+                .findFirst();
+        return cuentaOpt.orElse(null);
+    }
+
 }
 
 

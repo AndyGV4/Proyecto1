@@ -9,5 +9,5 @@ public interface ServicioClientes {
     boolean eliminarCliente(int numero);
     Cliente consultarCliente(int numero);
     TreeSet<Cliente> obtenerClientes();
-    Cliente buscarClientePorRFC(String rfc);
+    Cliente buscarClientePorCif(String rfc);
 }

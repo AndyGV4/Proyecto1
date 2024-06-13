@@ -10,4 +10,5 @@ public interface ServicioCuentas {
     void abonarCuenta(int numero, double abono);
     void retirar(int numero, double retiro);
     ArrayList<Cuenta> obtenerCuentas();
+    Cuenta obtenerCuenta(int numero);
 }
