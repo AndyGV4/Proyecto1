@@ -1,64 +1,83 @@
 package com.proyect1.banco.proyecto1;
 
 import com.proyect1.banco.proyecto1.entities.*;
-import com.proyect1.banco.proyecto1.services.servicesImp.ServicioClientesImpl;
-import com.proyect1.banco.proyecto1.services.servicesImp.ServicioCuentasImpl;
-
-
-import java.util.Collections;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 
 public class Main {
     public static void main(String[] args) {
-        // Crear domicilios
-        Domicilio domicilio1 = new Domicilio("Calle 123", 456, "Colonia", "Estado", "País", 12345);
-        Domicilio domicilio2 = new Domicilio("Avenida 456", 789, "Colonia", "Estado", "País", 67890);
+        Cliente cliente1 = new Cliente(1, "Cliente 1", new Domicilio("Calle 1", 123, "Colonia A", "Estado X", "Pais F", 051050), "RFC1", "555-1234", "01/01/1990");
+        Cliente cliente2 = new Cliente(2, "Cliente 2", new Domicilio("Calle 2", 456, "Colonia B", "Estado Y", "Pais G", 051053), "RFC2", "555-5678", "02/02/1980");
+        Cliente cliente3 = new Cliente(3, "Cliente 3", new Domicilio("Calle 3", 789, "Colonia C", "Estado Z", "Pais H", 051055), "RFC3", "555-9999", "03/03/1970");
 
-        // Crear banco
-        Banco banco = new Banco("Banco Ejemplo", domicilio1, "RFCBANCO123", "1234567890");
-
-        // Crear servicio de clientes
-        ServicioClientesImpl servicioClientes = new ServicioClientesImpl();
-
-        // Crear clientes
-        Cliente cliente1 = new Cliente(1, "Juan Perez", domicilio1, "RFC123", "1234567890", "01/01/1980");
-        Cliente cliente2 = new Cliente(2, "Maria Lopez", domicilio2, "RFC456", "0987654321", "02/02/1985");
-
-        // Agregar clientes al servicio de clientes
-        servicioClientes.agregarCliente(cliente1);
-        servicioClientes.agregarCliente(cliente2);
-
-        // Agregar clientes al banco
-        banco.setClientes(servicioClientes.obtenerClientes());
-
-        // Crear servicio de cuentas
-        ServicioCuentasImpl servicioCuentas = new ServicioCuentasImpl();
-
-        // Crear cuentas
-        CuentaAhorro cuentaAhorro1 = new CuentaAhorro(1, 1000.0, 0.02);
-        CuentaAhorro cuentaAhorro2 = new CuentaAhorro(2, 2000.0, 0.03);
-        CuentaCheque cuentaDeCheque1 = new CuentaCheque(3, 1500.0, 50.0);
-        CuentaCheque cuentaDeCheque2 = new CuentaCheque(4, 2500.0, 75.0);
-
-        // Agregar cuentas a los clientes
-        cliente1.getCuentas().add(cuentaAhorro1);
-        cliente1.getCuentas().add(cuentaDeCheque1);
-        cliente2.getCuentas().add(cuentaAhorro2);
-        cliente2.getCuentas().add(cuentaDeCheque2);
-
-        // Agregar cuentas al servicio de cuentas
-        servicioCuentas.agregarCuenta(cuentaAhorro1);
-        servicioCuentas.agregarCuenta(cuentaAhorro2);
-        servicioCuentas.agregarCuenta(cuentaDeCheque1);
-        servicioCuentas.agregarCuenta(cuentaDeCheque2);
-
-        // Imprimir clientes y sus cuentas
-        for (Cliente cliente : banco.getClientes()) {
-            System.out.println(cliente);
-            Collections.sort(cliente.getCuentas());
-            for (Cuenta cuenta : cliente.getCuentas()) {
-                System.out.println(cuenta);
+        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\agvarela\\Documents\\Java_Developer\\cuentas.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                processLine(line, cliente1, cliente2, cliente3);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Validar que cada cliente tenga sus respectivas cuentas
+        validateClientes(cliente1, cliente2, cliente3);
+    }
+
+    private static void processLine(String line, Cliente cliente1, Cliente cliente2, Cliente cliente3) {
+        System.out.println("Processing line: " + line); // Debugging: Print each line read from the file
+        line = line.trim();
+        if (line.startsWith("CA") || line.startsWith("CC")) {
+            String[] parts = line.substring(3, line.length() - 1).split(",\\s*");
+            int numeroCuenta = Integer.parseInt(parts[0].trim());
+            String fechaApertura = parts[1].trim();
+            double saldo = Double.parseDouble(parts[2].trim());
+            double extra = Double.parseDouble(parts[3].trim());
+            int numeroCliente = Integer.parseInt(parts[4].trim());
+
+            Cuenta cuenta = null;
+            if (line.startsWith("CA")) {
+                cuenta = new CuentaAhorro(numeroCuenta, saldo, extra);
+            } else if (line.startsWith("CC")) {
+                cuenta = new CuentaCheque(numeroCuenta, saldo, extra);
+            }
+
+            if (cuenta != null) {
+                switch (numeroCliente) {
+                    case 1:
+                        cliente1.getCuentas().add(cuenta);
+                        break;
+                    case 2:
+                        cliente2.getCuentas().add(cuenta);
+                        break;
+                    case 3:
+                        cliente3.getCuentas().add(cuenta);
+                        break;
+                }
+            }
+            // Debugging: Print the parsed and assigned cuenta information
+            System.out.println("Parsed cuenta: " + cuenta + " assigned to cliente: " + numeroCliente);
+        }
+    }
+
+    private static void validateClientes(Cliente cliente1, Cliente cliente2, Cliente cliente3) {
+        if (cliente1.getCuentas().size() == 1) {
+            System.out.println("Cliente 1 tiene 1 cuenta");
+        } else {
+            System.out.println("Error: Cliente 1 tiene " + cliente1.getCuentas().size() + " cuentas");
+        }
+
+        if (cliente2.getCuentas().size() == 2) {
+            System.out.println("Cliente 2 tiene 2 cuentas");
+        } else {
+            System.out.println("Error: Cliente 2 tiene " + cliente2.getCuentas().size() + " cuentas");
+        }
+
+        if (cliente3.getCuentas().size() == 2) {
+            System.out.println("Cliente 3 tiene 2 cuentas");
+        } else {
+            System.out.println("Error: Cliente 3 tiene " + cliente3.getCuentas().size() + " cuentas");
         }
     }
 }
