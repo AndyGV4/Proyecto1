@@ -1,13 +1,16 @@
 package com.proyect1.banco.proyecto1.entities;
 
+import java.time.LocalDate;
+
 public abstract class Cuenta implements Comparable<Cuenta> {
     private int numero;
+    protected LocalDate fechaApertura;
     private double saldo;
-    private String fechaApertura;
-    private String fechaCancelacion;
+    private LocalDate fechaCancelacion;
 
-    public Cuenta(int numero, double saldo) {
+    public Cuenta(int numero,LocalDate fechaApertura, double saldo) {
         this.numero = numero;
+        this.fechaApertura = fechaApertura;
         this.saldo = saldo;
     }
 
@@ -29,19 +32,19 @@ public abstract class Cuenta implements Comparable<Cuenta> {
         this.saldo = saldo;
     }
 
-    public String getFechaApertura() {
+    public LocalDate getFechaApertura() {
         return fechaApertura;
     }
 
-    public void setFechaApertura(String fechaApertura) {
+    public void setFechaApertura(LocalDate fechaApertura) {
         this.fechaApertura = fechaApertura;
     }
 
-    public String getFechaCancelacion() {
+    public LocalDate getFechaCancelacion() {
         return fechaCancelacion;
     }
 
-    public void setFechaCancelacion(String fechaCancelacion) {
+    public void setFechaCancelacion(LocalDate fechaCancelacion) {
         this.fechaCancelacion = fechaCancelacion;
     }
 

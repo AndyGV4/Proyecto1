@@ -2,11 +2,13 @@ package com.proyect1.banco.proyecto1.entities;
 
 import com.proyect1.banco.proyecto1.entities.Cuenta;
 
+import java.time.LocalDate;
+
 public class CuentaCheque extends Cuenta {
     private double costoManejoMensual;
 
-    public CuentaCheque(int numero, double saldo, double costoManejoMensual) {
-        super(numero, saldo);
+    public CuentaCheque(int numero, LocalDate fechaApertura, double saldo, double costoManejoMensual) {
+        super(numero, fechaApertura, saldo);
         this.costoManejoMensual = costoManejoMensual;
     }
 
@@ -23,6 +25,7 @@ public class CuentaCheque extends Cuenta {
     public String toString() {
         return "CuentaDeCheque{" +
                 "numero=" + getNumero() +
+                ", fechaApertura=" + fechaApertura +
                 ", saldo=" + getSaldo() +
                 ", costoManejoMensual=" + costoManejoMensual +
                 '}';

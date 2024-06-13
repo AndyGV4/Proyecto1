@@ -4,13 +4,15 @@ import com.proyect1.banco.proyecto1.entities.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
 public class Main {
     public static void main(String[] args) {
-        Cliente cliente1 = new Cliente(1, "Cliente 1", new Domicilio("Calle 1", 123, "Colonia A", "Estado X", "Pais F", 051050), "RFC1", "555-1234", "01/01/1990");
-        Cliente cliente2 = new Cliente(2, "Cliente 2", new Domicilio("Calle 2", 456, "Colonia B", "Estado Y", "Pais G", 051053), "RFC2", "555-5678", "02/02/1980");
-        Cliente cliente3 = new Cliente(3, "Cliente 3", new Domicilio("Calle 3", 789, "Colonia C", "Estado Z", "Pais H", 051055), "RFC3", "555-9999", "03/03/1970");
+        Cliente cliente1 = new Cliente(1, "Cliente 1", new Domicilio("Calle 1", 123, "Colonia A", "Estado X", "Pais F", 051050), "RFC1", "555-1234", LocalDate.of(1990, 1, 1));
+        Cliente cliente2 = new Cliente(2, "Cliente 2", new Domicilio("Calle 2", 456, "Colonia B", "Estado Y", "Pais G", 051053), "RFC2", "555-5678", LocalDate.of(1990, 2, 2 ));
+        Cliente cliente3 = new Cliente(3, "Cliente 3", new Domicilio("Calle 3", 789, "Colonia C", "Estado Z", "Pais H", 051055), "RFC3", "555-9999", LocalDate.of(1990, 3, 3));
 
         try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\agvarela\\Documents\\Java_Developer\\cuentas.txt"))) {
             String line;
@@ -26,21 +28,21 @@ public class Main {
     }
 
     private static void processLine(String line, Cliente cliente1, Cliente cliente2, Cliente cliente3) {
-        System.out.println("Processing line: " + line); // Debugging: Print each line read from the file
+        System.out.println("Processing line: " + line);
         line = line.trim();
         if (line.startsWith("CA") || line.startsWith("CC")) {
             String[] parts = line.substring(3, line.length() - 1).split(",\\s*");
             int numeroCuenta = Integer.parseInt(parts[0].trim());
-            String fechaApertura = parts[1].trim();
+            LocalDate fechaApertura = LocalDate.parse(parts[1].trim(),  DateTimeFormatter.ofPattern("dd-MM-yyyy"));
             double saldo = Double.parseDouble(parts[2].trim());
             double extra = Double.parseDouble(parts[3].trim());
             int numeroCliente = Integer.parseInt(parts[4].trim());
 
             Cuenta cuenta = null;
             if (line.startsWith("CA")) {
-                cuenta = new CuentaAhorro(numeroCuenta, saldo, extra);
+                cuenta = new CuentaAhorro(numeroCuenta, fechaApertura, saldo, extra);
             } else if (line.startsWith("CC")) {
-                cuenta = new CuentaCheque(numeroCuenta, saldo, extra);
+                cuenta = new CuentaCheque(numeroCuenta, fechaApertura, saldo, extra);
             }
 
             if (cuenta != null) {

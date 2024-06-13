@@ -1,5 +1,6 @@
 package com.proyect1.banco.proyecto1.entities;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,10 +10,10 @@ public class Cliente implements Comparable<Cliente> {
     private Domicilio domicilio;
     private String rfc;
     private String telefono;
-    private String fechaNacimiento;
+    private LocalDate fechaNacimiento;
     private List<Cuenta> cuentas;
 
-    public Cliente(int numero, String nombre, Domicilio domicilio, String rfc, String telefono, String fechaNacimiento) {
+    public Cliente(int numero, String nombre, Domicilio domicilio, String rfc, String telefono, LocalDate fechaNacimiento) {
         this.numero = numero;
         this.nombre = nombre;
         this.domicilio = domicilio;
@@ -64,11 +65,11 @@ public class Cliente implements Comparable<Cliente> {
         this.telefono = telefono;
     }
 
-    public String getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
